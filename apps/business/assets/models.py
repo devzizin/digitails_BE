@@ -44,7 +44,7 @@ class Asset(models.Model):
 
     asset_type = models.ForeignKey(AssetType, on_delete=models.PROTECT, related_name="assets")
     owner = models.ForeignKey(
-        "users.CompanyUser",
+        "users.UserCompany",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
