@@ -2,9 +2,11 @@
 """Base settings to build other settings files upon."""
 import os
 import ssl
+import environ
+
+from datetime import timedelta
 from pathlib import Path
 
-import environ
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # svitup/
@@ -15,6 +17,8 @@ READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
+
+SECRET_KEY = env("DJANGO_SECRET_KEY", default="dev-secret-key")
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -94,6 +98,7 @@ SHARED_APPS = [
 
 TENANT_APPS = [
     "django.contrib.contenttypes",
+    "ninja_jwt.token_blacklist",
 ]
 
 THIRD_PARTY_APPS = [
@@ -106,7 +111,7 @@ THIRD_PARTY_APPS = [
     "django_celery_beat",
     "corsheaders",
     "ninja",
-    # "ninja_jwt",
+    "ninja_jwt",
 ]
 
 INSTALLED_APPS = (
@@ -361,3 +366,44 @@ TENANT_BASE_DOMAIN = env(
     "TENANT_BASE_DOMAIN",
     default="localhost",
 )
+
+ACCESS_TOKEN_MINUTES = env.int(
+    "DJANGO_ACCESS_TOKEN_MINUTES",
+    default=15,
+)
+
+REFRESH_TOKEN_DAYS = env.int(
+    "DJANGO_REFRESH_TOKEN_DAYS",
+    default=7,
+)
+
+
+NINJA_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=ACCESS_TOKEN_MINUTES),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=REFRESH_TOKEN_DAYS),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": env("DJANGO_JWT_SIGNING_KEY", default=SECRET_KEY),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+}
+
+SECRET_ENCRYPTION_KEY = env("SECRET_ENCRYPTION_KEY")
+
+
+AUTH_COOKIE_ACCESS_NAME = "access"
+AUTH_COOKIE_REFRESH_NAME = "refresh"
+
+AUTH_COOKIE_DOMAIN = None  # override in prod
+AUTH_COOKIE_SECURE = not DEBUG
+AUTH_COOKIE_HTTP_ONLY = True
+
+AUTH_COOKIE_SAMESITE_ACCESS = "Lax"
+AUTH_COOKIE_SAMESITE_REFRESH = "Strict"
+
+AUTH_COOKIE_ACCESS_MAX_AGE = ACCESS_TOKEN_MINUTES * 60
+
+AUTH_COOKIE_REFRESH_MAX_AGE = REFRESH_TOKEN_DAYS * 24 * 60 * 60

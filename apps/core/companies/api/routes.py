@@ -3,8 +3,8 @@ from typing import List, Optional
 from ninja import Router
 from ninja_jwt.authentication import JWTAuth
 
-from apps.core.companies.selectors.selectors import CompanySelector
-from apps.core.companies.services.services import CompanyService
+from apps.core.companies.selectors.company_selector import CompanySelector
+from apps.core.companies.services.company_service import CompanyService
 from .schemas import (
     CompanyCreateSchema,
     CompanyUpdateSchema,

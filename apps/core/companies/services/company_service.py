@@ -5,8 +5,8 @@ from django_tenants.utils import schema_context, get_public_schema_name
 
 from apps.core.companies.exceptions import CompanyAlreadyExists
 from apps.core.companies.models import Company
-from apps.core.companies.selectors.selectors import CompanySelector
-from apps.core.tenants.services.services import TenantService
+from apps.core.companies.selectors.company_selector import CompanySelector
+from apps.core.tenants.services.tenant_service import TenantService
 from apps.core.tenants.services.slug_service import SlugService
 from config.settings.base import TENANT_BASE_DOMAIN
 

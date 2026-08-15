@@ -1,10 +1,10 @@
 from functools import wraps
 
 from apps.core.permissions.exceptions import PermissionDeniedError
-from apps.core.permissions.selectors.selectors import PermissionSelectors
+from apps.core.permissions.selectors.permission_selector import PermissionSelector
 
 
-def require_permission(code: str):
+def permission_required(code: str):
     """Guards a Ninja route: raises PermissionDeniedError (403) unless
     the requesting user's CompanyUser has the given permission code.
 
@@ -16,7 +16,7 @@ def require_permission(code: str):
         @wraps(view_func)
         def wrapper(request, *args, **kwargs):
             company_user = request.auth.company_profile
-            if not PermissionSelectors.company_user_has_permission(
+            if not PermissionSelector.company_user_has_permission(
                 company_user=company_user, code=code
             ):
                 raise PermissionDeniedError()

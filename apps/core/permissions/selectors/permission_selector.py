@@ -3,7 +3,7 @@ from apps.core.permissions.models import Permission, Role, UserRole
 from apps.core.users.models import CompanyUser
 
 
-class PermissionSelectors:
+class PermissionSelector:
     @staticmethod
     def get_role_by_id(role_id: int) -> Role:
         role = Role.objects.filter(id=role_id).first()

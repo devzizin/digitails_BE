@@ -2,11 +2,11 @@ from django.db import transaction
 
 from apps.core.permissions.exceptions import RoleAlreadyAssignedError, RoleNotFoundError
 from apps.core.permissions.models import Permission, Role, UserRole
-from apps.core.permissions.selector import PermissionSelectors
-from apps.core.users.models import CompanyUser
+from apps.core.permissions.selectors.permission_selector import PermissionSelector
+from apps.core.users.models import User, UserCompany
 
 
-class PermissionServices:
+class PermissionService:
     @staticmethod
     @transaction.atomic
     def create_role(
@@ -20,16 +20,16 @@ class PermissionServices:
 
     @staticmethod
     @transaction.atomic
-    def assign_role(*, company_user: CompanyUser, role: Role) -> UserRole:
-        if PermissionSelectors.get_user_role(company_user=company_user, role=role):
+    def assign_role(*, company_user: UserCompany, role: Role) -> UserRole:
+        if PermissionSelector.get_user_role(company_user=company_user, role=role):
             raise RoleAlreadyAssignedError()
 
         return UserRole.objects.create(company_user=company_user, role=role)
 
     @staticmethod
     @transaction.atomic
-    def revoke_role(*, company_user: CompanyUser, role: Role) -> None:
-        user_role = PermissionSelectors.get_user_role(company_user=company_user, role=role)
+    def revoke_role(*, company_user: UserCompany, role: Role) -> None:
+        user_role = PermissionSelector.get_user_role(company_user=company_user, role=role)
         if not user_role:
             raise RoleNotFoundError()
         user_role.delete()

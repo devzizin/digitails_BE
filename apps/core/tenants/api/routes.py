@@ -8,7 +8,7 @@ from apps.core.tenants.api.schemas import (
     TenantListSchema,
 )
 
-from apps.core.tenants.selectors.selectors import TenantSelector
+from apps.core.tenants.selectors.tenants_selector import TenantSelector
 from apps.core.tenants.services.services import TenantService
 
 

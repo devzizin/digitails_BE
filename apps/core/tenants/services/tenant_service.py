@@ -4,7 +4,7 @@ from django_tenants.utils import schema_context
 
 from apps.core.tenants.models import Tenant, Domain
 from apps.core.tenants.services.slug_service import SlugService
-from apps.core.tenants.selectors.selectors import TenantSelector
+from apps.core.tenants.selectors.tenants_selector import TenantSelector
 
 class TenantService:
 
