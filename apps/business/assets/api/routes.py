@@ -3,9 +3,9 @@ from uuid import UUID
 from ninja import Query, Router
 from ninja_jwt.authentication import JWTAuth
 
-from apps.core.assets.api import schemas
-from apps.core.assets.selectors.asset_selector import AssetSelector
-from apps.core.assets.services.asset_service import AssetService
+from apps.business.assets.api import schemas
+from apps.business.assets.selectors.asset_selector import AssetSelector
+from apps.business.assets.services.asset_service import AssetService
 
 router = Router(tags=["Assets"])
 

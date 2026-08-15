@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from apps.core.assets.exceptions import AssetNotFound, AssetTypeNotFound, TagNotFound
-from apps.core.assets.models import Asset, AssetType, Tag
+from apps.business.assets.exceptions import AssetNotFound, AssetTypeNotFound, TagNotFound
+from apps.business.assets.models import Asset, AssetType, Tag
 
 
 class AssetSelector:
