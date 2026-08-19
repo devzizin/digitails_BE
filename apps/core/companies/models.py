@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -13,6 +15,12 @@ class CompanyQuerySet(models.QuerySet):
 
 class Company(models.Model):
     id = models.BigAutoField(primary_key=True)
+    uuid = models.UUIDField(
+        unique=True, 
+        default=uuid.uuid4, 
+        editable=False, 
+        db_index=True,
+    )
     tenant = models.OneToOneField(
         "tenants.Tenant",
         on_delete=models.CASCADE,

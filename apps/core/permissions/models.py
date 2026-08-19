@@ -38,7 +38,7 @@ class UserRole(models.Model):
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, db_index=True)
 
     company_user = models.ForeignKey(
-        "users.CompanyUser",
+        "users.UserCompany",
         on_delete=models.CASCADE,
         related_name="roles",
     )

@@ -4,6 +4,7 @@ from ninja import Router
 from ninja_jwt.authentication import JWTAuth
 from ninja_jwt.exceptions import TokenError
 from ninja_jwt.tokens import RefreshToken
+from django.http import JsonResponse
 
 from apps.core.companies.exceptions import CompanyNotFound
 from apps.core.companies.selectors.company_selector import CompanySelector
@@ -35,13 +36,14 @@ router = Router(tags=["Auth"])
         400: schemas.ErrorSchema,
         422: schemas.ErrorSchema,
     },
+    auth=None,
 )
 def register(request, payload: schemas.RegisterSchema):
     if UserService.email_exists(payload.email):
         raise EmailAlreadyExists()
 
-    if payload.username and UserService.username_exists(payload.username):
-        raise UsernameAlreadyExists()
+    # if payload.username and UserService.username_exists(payload.username):
+    #     raise UsernameAlreadyExists()
 
     try:
         company = request.tenant.company
@@ -66,11 +68,7 @@ def register(request, payload: schemas.RegisterSchema):
     ).model_dump()
     data["access"] = tokens["access"]
 
-    response = router.api.create_response(
-        request,
-        data,
-        status=200,
-    )
+    response = JsonResponse(data, status=200)
 
     set_refresh_cookie(
         response,
@@ -86,6 +84,7 @@ def register(request, payload: schemas.RegisterSchema):
         200: schemas.AuthUserResponseSchema,
         401: schemas.ErrorSchema,
     },
+    auth=None,
 )
 def login(request, payload: schemas.LoginSchema):
     user = UserService.authenticate_user(
@@ -113,11 +112,7 @@ def login(request, payload: schemas.LoginSchema):
     ).model_dump()
     data["access"] = tokens["access"]
 
-    response = router.api.create_response(
-        request,
-        data,
-        status=200,
-    )
+    response = JsonResponse(data, status=200)
 
     set_refresh_cookie(
         response,

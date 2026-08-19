@@ -27,7 +27,7 @@ from typing import Optional, Annotated
 from uuid import UUID
 
 from ninja import Schema, FilterSchema, FilterLookup
-from pydantic import EmailStr, field_validator, ConfigDict, Field
+# from pydantic import EmailStr, field_validator, ConfigDict, Field
 
 from apps.core.users.selectors.user_selector import UserSelector
 
@@ -36,38 +36,38 @@ class LoginSchema(Schema):
     identifier: str
     password: str
 
-    @field_validator("identifier")
-    @classmethod
-    def normalize_identifier(cls, value: str) -> str:
-        return value.strip().lower()
+    # @field_validator("identifier")
+    # @classmethod
+    # def normalize_identifier(cls, value: str) -> str:
+    #     return value.strip().lower()
 
 
 class RegisterSchema(Schema):
-    email: EmailStr
-    username: str | None = None
+    email: str
+    # username: str | None = None
     password: str
     first_name: str | None = None
     last_name: str | None = None
     phone: str | None = None
 
-    @field_validator("email")
-    @classmethod
-    def validate_email_strict(cls, value):
-        if not value.isascii():
-            raise ValueError("Email must contain only ASCII characters")
-        return value.lower().strip()
+    # @field_validator("email")
+    # @classmethod
+    # def validate_email_strict(cls, value):
+    #     if not value.isascii():
+    #         raise ValueError("Email must contain only ASCII characters")
+    #     return value.lower().strip()
 
-    @field_validator("username")
-    @classmethod
-    def normalize_username(cls, value: str | None) -> str | None:
-        if value is None:
-            return value
-        value = value.strip().lower()
-        return value or None
+    # @field_validator("username")
+    # @classmethod
+    # def normalize_username(cls, value: str | None) -> str | None:
+    #     if value is None:
+    #         return value
+    #     value = value.strip().lower()
+    #     return value or None
 
 
 class CreateUserSchema(Schema):
-    email: EmailStr
+    email: str
 
     password: str
 
@@ -89,7 +89,7 @@ class MessageSchema(Schema):
 
 
 class MeSchema(Schema):
-    model_config = ConfigDict(from_attributes=True)
+    # model_config = ConfigDict(from_attributes=True)
 
     id: int
     uuid: UUID
@@ -115,7 +115,7 @@ class ChangePasswordSchema(Schema):
 
 
 class ResetPasswordRequestSchema(Schema):
-    email: EmailStr
+    email: str
 
 
 
@@ -129,18 +129,18 @@ class UpdateUserSchema(Schema):
     username: str | None = None
     phone: str | None = None
 
-    @field_validator("username")
-    @classmethod
-    def normalize_username(
-        cls,
-        value: str | None,
-    ) -> str | None:
-        if value is None:
-            return None
+    # @field_validator("username")
+    # @classmethod
+    # def normalize_username(
+    #     cls,
+    #     value: str | None,
+    # ) -> str | None:
+    #     if value is None:
+    #         return None
 
-        value = value.strip().lower()
+    #     value = value.strip().lower()
 
-        return value or None
+    #     return value or None
 
 
 class AcceptInvitationSchema(Schema):
@@ -153,40 +153,27 @@ class AcceptInvitationSchema(Schema):
 
 
 class CreateInvitationSchema(Schema):
-    email: EmailStr
+    email: str
 
 
-class InvitationInfoSchema(Schema):
-    email: EmailStr
-    company_name: str
-    user_exists: bool
-    status: str
-    invited_by: EmailStr | None = None
-    expires_at: datetime
+# class InvitationInfoSchema(Schema):
+#     email: str
+#     company_name: str
+#     user_exists: bool
+#     status: str
+#     invited_by: str | None = None
+#     expires_at: datetime
 
 
-class InvitationListItemSchema(Schema):
-    model_config = ConfigDict(from_attributes=True)
+# class InvitationListItemSchema(Schema):
+#     # model_config = ConfigDict(from_attributes=True)
 
-    uuid: UUID
-    email: EmailStr
-    status: str
-    invited_by: EmailStr | None = None
-    expires_at: datetime
-    created_at: datetime
-
-
-class InvitationListFilterSchema(FilterSchema):
-
-    email: Annotated[
-        str | None,
-        FilterLookup("email__icontains"),
-    ] = Field(
-        default=None,
-        description="Search invitations by email.",
-    )
-
-
+#     uuid: UUID
+#     email: str
+#     status: str
+#     invited_by: str | None = None
+#     expires_at: datetime
+#     created_at: datetime
 
 
 class CurrentCompanySchema(Schema):

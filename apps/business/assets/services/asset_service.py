@@ -1,9 +1,9 @@
 from django.db import transaction
 from django.utils import timezone
 
-from apps.core.assets.exceptions import AssetCodeAlreadyExists
-from apps.core.assets.models import Asset
-from apps.core.assets.selectors.asset_selector import AssetSelector
+from apps.business.assets.exceptions import AssetCodeAlreadyExists
+from apps.business.assets.models import Asset
+from apps.business.assets.selectors.asset_selector import AssetSelector
 
 
 class AssetService:

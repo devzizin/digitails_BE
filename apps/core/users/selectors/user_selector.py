@@ -10,34 +10,16 @@ class UserSelector:
 
     @staticmethod
     def get_user_by_id(user_id: int) -> User:
-        user = User.objects.filter(
-            id=user_id,
-            deleted_at__isnull=True,
-        ).first()
-
+        user = User.objects.filter(id=user_id).first()
         if not user:
             raise UserNotFound()
-
         return user
 
-
     @staticmethod
-    def get_user_by_uuid(
-        user_uuid: UUID,
-        with_organisations: bool = False,
-    ) -> User:
-
-        queryset = User.objects.filter(
-            uuid=user_uuid,
-            deleted_at__isnull=True,
-        )
-
-
-        user = queryset.first()
-
+    def get_user_by_uuid(user_uuid: UUID, with_organisations: bool = False) -> User:
+        user = User.objects.filter(uuid=user_uuid).first()
         if not user:
             raise UserNotFound()
-
         return user
 
     @staticmethod

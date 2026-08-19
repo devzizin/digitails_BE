@@ -18,7 +18,12 @@ class User(AbstractUser):
     If adding fields that need to be filled at user signup,
     check forms.SignupForm and forms.SocialSignupForms accordingly.
     """
-
+    uuid = models.UUIDField(
+            unique=True, 
+            default=uuid.uuid4, 
+            editable=False, 
+            db_index=True,
+        )
     name = CharField(_("Name of User"), blank=True, max_length=255)
     first_name = CharField(_("First name"), blank=True, max_length=150)
     last_name = CharField(_("Last name"), blank=True, max_length=150)

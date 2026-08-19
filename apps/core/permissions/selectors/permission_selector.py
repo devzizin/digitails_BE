@@ -1,6 +1,6 @@
 from apps.core.permissions.exceptions import PermissionNotFoundError, RoleNotFoundError
 from apps.core.permissions.models import Permission, Role, UserRole
-from apps.core.users.models import CompanyUser
+from apps.core.users.models import UserCompany
 
 
 class PermissionSelector:
@@ -29,13 +29,13 @@ class PermissionSelector:
         return Role.objects.all().order_by("name")
 
     @staticmethod
-    def get_user_role(*, company_user: CompanyUser, role: Role) -> UserRole | None:
+    def get_user_role(*, company_user: UserCompany, role: Role) -> UserRole | None:
         # Stays nullable: used as an existence check (is this role
         # already assigned?), not a "fetch a required object" lookup.
         return UserRole.objects.filter(company_user=company_user, role=role).first()
 
     @staticmethod
-    def get_company_user_permission_codes(company_user: CompanyUser) -> set[str]:
+    def get_company_user_permission_codes(company_user: UserCompany) -> set[str]:
         return set(
             Permission.objects.filter(roles__user_roles__company_user=company_user).values_list(
                 "code", flat=True
@@ -43,7 +43,7 @@ class PermissionSelector:
         )
 
     @staticmethod
-    def company_user_has_permission(*, company_user: CompanyUser, code: str) -> bool:
+    def company_user_has_permission(*, company_user: UserCompany, code: str) -> bool:
         return Permission.objects.filter(
             code=code,
             roles__user_roles__company_user=company_user,

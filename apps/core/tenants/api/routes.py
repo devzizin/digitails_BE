@@ -9,7 +9,7 @@ from apps.core.tenants.api.schemas import (
 )
 
 from apps.core.tenants.selectors.tenants_selector import TenantSelector
-from apps.core.tenants.services.services import TenantService
+from apps.core.tenants.services.tenant_service import TenantService
 
 
 router = Router(tags=["Platform Tenants"]) #, auth=JWTAuth())

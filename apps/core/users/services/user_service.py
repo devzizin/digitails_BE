@@ -57,9 +57,6 @@ class UserService:
     def email_exists(email: str) -> bool:
         return User.objects.filter(email=email.strip().lower()).exists()
 
-    @staticmethod
-    def username_exists(username: str) -> bool:
-        return User.objects.filter(username=username.strip().lower()).exists()
 
     @staticmethod
     def change_password(user: User, old_password: str, new_password: str) -> None:
@@ -101,7 +98,6 @@ class UserService:
         allowed_fields = {
             "first_name",
             "last_name",
-            "username",
             "phone",
         }
         updated_fields = []

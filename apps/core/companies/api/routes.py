@@ -20,6 +20,7 @@ router = Router(tags=["Core Companies"]) #, auth=JWTAuth())
 @router.get(
     "/",
     response={200: List[CompanyResponseSchema]},
+    auth=None,
 )
 def list_companies(request, search: Optional[str] = None):
     return CompanySelector.list_companies(search=search)
@@ -33,6 +34,7 @@ def list_companies(request, search: Optional[str] = None):
         409: ErrorSchema,
         422: ErrorSchema,
     },
+    auth=None,
 )
 def create_company(request, payload: CompanyCreateSchema):
     result = CompanyService.create_company(

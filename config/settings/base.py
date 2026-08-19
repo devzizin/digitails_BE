@@ -99,6 +99,8 @@ SHARED_APPS = [
 TENANT_APPS = [
     "django.contrib.contenttypes",
     "ninja_jwt.token_blacklist",
+    "apps.business.assets",
+    "apps.core.permissions",
 ]
 
 THIRD_PARTY_APPS = [
@@ -130,8 +132,7 @@ MIGRATION_MODULES = {"sites": "svitup.contrib.sites.migrations"}
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
+    "apps.core.users.backends.EmailOrUsernameBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
@@ -221,7 +222,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "svitup.users.context_processors.allauth_settings",
+                "apps.core.users.context_processors.allauth_settings",
             ],
         },
     },
@@ -348,13 +349,13 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 # https://docs.allauth.org/en/latest/account/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_ADAPTER = "svitup.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "apps.core.users.adapters.AccountAdapter"
 # https://docs.allauth.org/en/latest/account/forms.html
-ACCOUNT_FORMS = {"signup": "svitup.users.forms.UserSignupForm"}
+ACCOUNT_FORMS = {"signup": "apps.core.users.forms.UserSignupForm"}
 # https://docs.allauth.org/en/latest/socialaccount/configuration.html
-SOCIALACCOUNT_ADAPTER = "svitup.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "apps.core.users.adapters.SocialAccountAdapter"
 # https://docs.allauth.org/en/latest/socialaccount/configuration.html
-SOCIALACCOUNT_FORMS = {"signup": "svitup.users.forms.UserSocialSignupForm"}
+SOCIALACCOUNT_FORMS = {"signup": "apps.core.users.forms.UserSocialSignupForm"}
 
 
 # Your stuff...

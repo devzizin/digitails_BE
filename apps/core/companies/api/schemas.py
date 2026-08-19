@@ -20,7 +20,7 @@ class CompanyCreateSchema(Schema):
     address_text: Optional[str] = None
     phone: Optional[str] = None
     website: Optional[str] = None
-    logo: Optional[str] = None
+    logo_url: Optional[str] = None
     identification_number: Optional[str] = None
     is_verified: bool = False
     secret_key: Optional[str] = None
@@ -67,7 +67,7 @@ class CompanyUpdateSchema(Schema):
 
 class CompanyResponseSchema(Schema):
     id: int
-    uuid: UUID
+    # uuid: UUID
     name: str
     email: Optional[str]
     phone: Optional[str]
