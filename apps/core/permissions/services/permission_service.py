@@ -3,7 +3,7 @@ from django.db import transaction
 from apps.core.permissions.exceptions import RoleAlreadyAssignedError, RoleNotFoundError
 from apps.core.permissions.models import Permission, Role, UserRole
 from apps.core.permissions.selectors.permission_selector import PermissionSelector
-from apps.core.users.models import User, UserCompany
+from apps.core.users.models import UserCompany
 
 
 class PermissionService:

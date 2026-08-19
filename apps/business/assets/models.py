@@ -1,6 +1,5 @@
 import uuid
 
-from django.contrib.postgres.indexes import GinIndex
 from django.db import models
 
 
@@ -70,7 +69,6 @@ class Asset(models.Model):
         indexes = [
             models.Index(fields=["asset_type", "status"], name="asset_type_status_idx"),
             models.Index(fields=["owner", "status"], name="asset_owner_status_idx"),
-            GinIndex(fields=["name"], name="asset_name_trgm_idx", opclasses=["gin_trgm_ops"]),
         ]
 
     def __str__(self):

@@ -98,6 +98,7 @@ SHARED_APPS = [
 
 TENANT_APPS = [
     "django.contrib.contenttypes",
+    "django.contrib.postgres",
     "ninja_jwt.token_blacklist",
     "apps.business.assets",
     "apps.core.permissions",
