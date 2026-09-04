@@ -20,13 +20,13 @@ class RoleCreateIn(Schema):
 
 
 class AssignRoleIn(Schema):
-    company_user_id: int
-    role_id: int
+    company_user_uuid: int
+    role_uuid: int
 
 
 class RevokeRoleIn(Schema):
-    company_user_id: int
-    role_id: int
+    company_user_uuid: int
+    role_uuid: int
 
 
 class UserRoleOut(Schema):

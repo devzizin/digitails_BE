@@ -10,9 +10,9 @@ class PermissionService:
     @staticmethod
     @transaction.atomic
     def create_role(
-        *, name: str, permission_codes: list[str] | None = None, is_system: bool = False
+        *, code: str, permission_codes: list[str] | None = None, is_system: bool = False
     ) -> Role:
-        role = Role.objects.create(name=name, is_system=is_system)
+        role = Role.objects.create(code=code, is_system=is_system)
         if permission_codes:
             permissions = Permission.objects.filter(code__in=permission_codes)
             role.permissions.set(permissions)

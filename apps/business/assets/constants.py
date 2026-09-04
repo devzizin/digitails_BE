@@ -15,7 +15,7 @@ MODULE_CODE = "assets"
 # NAMESPACE
 # =====================================================
 
-CORE_NAMESPACE = "bussiness"
+BUSINESS_NAMESPACE = "bussiness"
 
 #======================================================
 # RESOURCE
@@ -23,11 +23,15 @@ CORE_NAMESPACE = "bussiness"
 
 ASSET_RESOURCE = "asset"
 
+ASSET_TYPE_RESOURCE = "asset_type"
+
 #=====================================================
 # ENTITY TYPE
 # =====================================================
 
-ASSET_ENTITY_TYPE = "asset"
+ASSET_ENTITY_TYPE_CODE = f"{BUSINESS_NAMESPACE}.{ASSET_RESOURCE}"
+
+ASSET_TYPE_ENTITY_TYPE_CODE = f"{BUSINESS_NAMESPACE}.{ASSET_TYPE_RESOURCE}"
 
 #=====================================================
 # DISPLAY

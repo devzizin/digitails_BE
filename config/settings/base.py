@@ -102,6 +102,7 @@ TENANT_APPS = [
     "ninja_jwt.token_blacklist",
     "apps.business.assets",
     "apps.core.permissions",
+    "apps.core.modules_registry",
 ]
 
 THIRD_PARTY_APPS = [

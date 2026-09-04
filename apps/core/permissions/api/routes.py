@@ -20,36 +20,28 @@ def list_roles(request):
     return PermissionSelector.list_roles()
 
 
-@router.get("/roles/{role_id}", response=RoleOut)
-def get_role(request, role_id: int):
-    return PermissionSelector.get_role_by_id(role_id)
+@router.get("/roles/{role_uuid}", response=RoleOut)
+def get_role(request, role_uuid: str):
+    return PermissionSelector.get_role_by_uuid(role_uuid)
 
-
-@router.post("/roles", response=RoleOut)
-def create_role(request, payload: RoleCreateIn):
-    return PermissionService.create_role(
-        name=payload.name,
-        permission_codes=payload.permission_codes,
-        is_system=payload.is_system,
-    )
 
 
 @router.post("/roles/assign", response=UserRoleOut)
 def assign_role(request, payload: AssignRoleIn):
-    company_user = get_object_or_404(UserCompany, id=payload.company_user_id)
-    role = PermissionSelector.get_role_by_id(payload.role_id)
+    company_user = get_object_or_404(UserCompany, uuid=payload.company_user_uuid)
+    role = PermissionSelector.get_role_by_uuid(payload.role_uuid)
     return PermissionService.assign_role(company_user=company_user, role=role)
 
 
 @router.post("/roles/revoke", response={204: None})
 def revoke_role(request, payload: RevokeRoleIn):
-    company_user = get_object_or_404(UserCompany, id=payload.company_user_id)
-    role = PermissionSelector.get_role_by_id(payload.role_id)
+    company_user = get_object_or_404(UserCompany, uuid=payload.company_user_uuid)
+    role = PermissionSelector.get_role_by_uuid(payload.role_uuid)
     PermissionService.revoke_role(company_user=company_user, role=role)
     return 204, None
 
 
-@router.get("/company-users/{company_user_id}/permissions", response=list[str])
-def list_company_user_permissions(request, company_user_id: int):
-    company_user = get_object_or_404(UserCompany, id=company_user_id)
+@router.get("/company-users/{company_user_uuid}/permissions", response=list[str])
+def list_company_user_permissions(request, company_user_uuid: str):
+    company_user = get_object_or_404(UserCompany, uuid=company_user_uuid)
     return sorted(PermissionSelector.get_company_user_permission_codes(company_user))

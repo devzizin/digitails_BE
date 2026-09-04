@@ -1,12 +1,13 @@
 from apps.core.permissions.exceptions import PermissionNotFoundError, RoleNotFoundError
 from apps.core.permissions.models import Permission, Role, UserRole
 from apps.core.users.models import UserCompany
+from apps.core.entities.models import Entity
 
 
 class PermissionSelector:
     @staticmethod
-    def get_role_by_id(role_id: int) -> Role:
-        role = Role.objects.filter(id=role_id).first()
+    def get_role_by_uuid(role_uuid: str) -> Role:
+        role = Role.objects.filter(uuid=role_uuid).first()
         if not role:
             raise RoleNotFoundError()
         return role
@@ -26,7 +27,7 @@ class PermissionSelector:
 
     @staticmethod
     def list_roles():
-        return Role.objects.all().order_by("name")
+        return Role.objects.all().order_by("code")
 
     @staticmethod
     def get_user_role(*, company_user: UserCompany, role: Role) -> UserRole | None:
@@ -42,9 +43,22 @@ class PermissionSelector:
             )
         )
 
+    
     @staticmethod
-    def company_user_has_permission(*, company_user: UserCompany, code: str) -> bool:
+    def company_user_has_permission(
+        *, 
+        company_user: UserCompany, 
+        code: str, 
+        entity: Entity | None = None,
+    ) -> bool:
+        q = Q(company_user=company_user)
+
+        if entity is not None:
+            q &= Q(entity__isnull=True) | Q(entity=entity)
+        else:
+            q &= Q(entity__isnull=True)
+
         return Permission.objects.filter(
             code=code,
-            roles__user_roles__company_user=company_user,
+            roles__user_roles__in=UserRole.objects.filter(q),
         ).exists()
