@@ -1,7 +1,6 @@
 from apps.core.permissions.models import (
     Permission,
-    RoleTemplate,
-    RoleTemplatePermission,
+    Role
 )
 from apps.core.permissions.validators.permission_validator import PermissionValidators
 
@@ -55,7 +54,7 @@ class PermissionRegistryService:
         return obj
 
     @staticmethod
-    def sync_template(
+    def register_role(
         *,
         code,
         label,
@@ -64,16 +63,12 @@ class PermissionRegistryService:
         is_system=False,
     ):
 
-        PermissionValidators.validate_resource_template_code(code)
-        PermissionValidators.validate_template_permissions(
-            template_code=code,
-            permission_codes=permission_codes or [],
-        )
+        PermissionValidators.validate_permission_code(code)
 
         if not isinstance(label, str) or not label.strip():
             raise RuntimeError(f"Invalid role template label " f"for '{code}'")
 
-        role, _ = RoleTemplate.objects.get_or_create(
+        role, _ = Role.objects.get_or_create(
             code=code,
             defaults={
                 "label": label,
@@ -99,21 +94,5 @@ class PermissionRegistryService:
                 raise RuntimeError(
                     f"Permissions not found " f"for role '{code}': " f"{missing}"
                 )
-
-            permissions = [
-                permissions_map[permission_code] for permission_code in permission_codes
-            ]
-
-            RoleTemplatePermission.objects.filter(role_template=role).delete()
-
-            RoleTemplatePermission.objects.bulk_create(
-                [
-                    RoleTemplatePermission(
-                        role_template=role,
-                        permission=p,
-                    )
-                    for p in permissions
-                ]
-            )
 
         return role

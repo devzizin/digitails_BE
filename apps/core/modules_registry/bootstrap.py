@@ -1,6 +1,7 @@
 from apps.core.permissions.services.permission_registry_service import (
     PermissionRegistryService,
 )
+from apps.core.modules_registry.loader import RegistryLoader
 
 
 class RegistryBootstrapService:
@@ -16,8 +17,6 @@ class RegistryBootstrapService:
     ):
         manifests = RegistryLoader.load()
         for manifest in manifests:
-
-            ArchitectureValidators.validate_registry_manifest(manifest)
 
             # ENTITY TYPES
             if include_entity_types:
