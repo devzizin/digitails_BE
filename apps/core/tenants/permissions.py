@@ -45,15 +45,3 @@ TENANT_DEACTIVATE = PermissionBuilder.build_permission_code(
     action=Actions.DEACTIVATE,
 )
 
-TENANT_ADMIN_TEMPLATE = PermissionBuilder.build_template_code(
-    resource=TENANT_RESOURCE,
-    namespace=CORE_NAMESPACE,
-    level=Levels.ADMIN,
-)
-
-TENANT_VIEWER_TEMPLATE = PermissionBuilder.build_template_code(
-    resource=TENANT_RESOURCE,
-    namespace=CORE_NAMESPACE,
-    level=Levels.VIEWER,
-)
-

@@ -48,7 +48,7 @@ class RegistryLoader:
 
             entity_types=getattr(module, "ENTITY_TYPES", []),
             permissions=getattr(module, "PERMISSIONS", []),
-            role_templates=getattr(module, "ROLE_TEMPLATES", []),
-            app_levels=getattr(module, "APP_LEVELS", {}),
+            # role_templates=getattr(module, "ROLE_TEMPLATES", []),
+            # app_levels=getattr(module, "APP_LEVELS", {}),
             module=getattr(module, "MODULE", None),
         )

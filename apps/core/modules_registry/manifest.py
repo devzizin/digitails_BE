@@ -12,9 +12,9 @@ class RegistryManifest:
 
     entity_types: list[dict] = field(default_factory=list)
     permissions: list[dict] = field(default_factory=list)
-    role_templates: list[dict] = field(default_factory=list)
+    # role_templates: list[dict] = field(default_factory=list)
 
-    app_levels: dict[str, list[str]] = field(
-        default_factory=dict
-    )
+    # app_levels: dict[str, list[str]] = field(
+    #     default_factory=dict
+    # )
     module: dict | None = None

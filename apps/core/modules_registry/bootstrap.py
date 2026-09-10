@@ -2,6 +2,7 @@ from apps.core.permissions.services.permission_registry_service import (
     PermissionRegistryService,
 )
 from apps.core.modules_registry.loader import RegistryLoader
+from apps.core.entities.services.entity_service import EntityTypeService
 
 
 class RegistryBootstrapService:
@@ -28,11 +29,6 @@ class RegistryBootstrapService:
             # PERMISSIONS
             cls._bootstrap_permissions(manifest.permissions)
 
-            # ROLE TEMPLATES
-            cls._bootstrap_role_templates(manifest.role_templates)
-
-            # APP LEVELS
-            cls._bootstrap_app_levels(manifest.app_levels)
 
     @staticmethod
     def _bootstrap_entity_types(
@@ -62,37 +58,4 @@ class RegistryBootstrapService:
         for item in permissions:
             PermissionRegistryService.register_permission(**item)
 
-    # ROLE TEMPLATES
-    @staticmethod
-    def _bootstrap_role_templates(
-        role_templates,
-    ):
-
-        for item in role_templates:
-            PermissionRegistryService.sync_template(
-                code=item["code"],
-                label=item["label"],
-                description=item.get("description"),
-                permission_codes=item.get(
-                    "permissions",
-                    [],
-                ),
-                is_system=item.get(
-                    "is_system",
-                    False,
-                ),
-            )
-
-    # APP LEVELS
-    @staticmethod
-    def _bootstrap_app_levels(
-        app_levels,
-    ):
-
-        for app_level_code, template_codes in app_levels.items():
-            print(
-                "APP LEVEL:",
-                app_level_code,
-                "=>",
-                template_codes,
-            )
+ 

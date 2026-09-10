@@ -44,16 +44,14 @@ USER_MANAGE = PermissionBuilder.build_permission_code(
     namespace=CORE_NAMESPACE,
     action=Actions.MANAGE,
 )
-
-USER_ADMIN_TEMPLATE = PermissionBuilder.build_template_code(
-    resource=USER_RESOURCE,
+USER_ACTIVATE = PermissionBuilder.build_permission_code(
     namespace=CORE_NAMESPACE,
-    level=Levels.ADMIN,
+    resource=USER_RESOURCE,
+    action=Actions.ACTIVATE,
 )
 
-USER_VIEWER_TEMPLATE = PermissionBuilder.build_template_code(
-    resource=USER_RESOURCE,
+USER_DEACTIVATE = PermissionBuilder.build_permission_code(
     namespace=CORE_NAMESPACE,
-    level=Levels.VIEWER,
+    resource=USER_RESOURCE,
+    action=Actions.DEACTIVATE,
 )
-

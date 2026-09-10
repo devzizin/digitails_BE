@@ -33,7 +33,7 @@ TENANT_LABEL = "Tenant"
 # DESCRIPTION
 # =====================================================
 
-tenant_description = (
+TENANT_DESCRIPTION = (
     "Tenant management functionality."
 )
 

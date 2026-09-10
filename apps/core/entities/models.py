@@ -39,6 +39,10 @@ class Entity(models.Model):
         editable=False,
         db_index=True,
     )
+    code = models.CharField(
+        max_length=50,
+        unique=True,
+    )
     entity_type = models.ForeignKey(
         EntityType,
         on_delete=models.PROTECT,
@@ -53,28 +57,30 @@ class Entity(models.Model):
     def __str__(self) -> str:
         return f"{self.entity_type.code} ({self.id})"
 
-# class RelationType(models.Model):
-#     uuid = models.UUIDField(
-#         unique=True,
-#         default=uuid.uuid4,
-#         editable=False,
-#         db_index=True,
-#     )
-#     code = models.CharField(
-#         max_length=50,
-#         unique=True,
-#     )
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     deleted_at = models.DateTimeField(null=True, blank=True)
 
-class RelationType(models.Choices):
-    PARENT_CHILD = "parent_child", "Parent-Child"
-    OWNS = "owns", "Owns"
-    USES = "uses", "Uses"
-    HOSTED_ON = "hosted_on", "Hosted On"
-    ASSOCIATED = "associated", "Associated"
-    RELATED = "related", "Related"
+class RelationType(models.Model):
+    uuid = models.UUIDField(
+        unique=True,
+        default=uuid.uuid4,
+        editable=False,
+        db_index=True,
+    )
+    code = models.CharField(
+        max_length=50,
+        unique=True,
+    )
+    description = models.TextField(null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = "relation_types"
+
+    def __str__(self) -> str:
+        return self.code
+
 
 
 class EntityRelation(models.Model):
@@ -98,7 +104,7 @@ class EntityRelation(models.Model):
     )
 
     type = models.ForeignKey(
-        Entity,
+        RelationType,
         on_delete=models.PROTECT,
     )
 

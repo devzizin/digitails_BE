@@ -34,15 +34,3 @@ ENTITY_DELETE = PermissionBuilder.build_permission_code(
     action=Actions.DELETE,
 )
 
-ENTITY_ADMIN_TEMPLATE = PermissionBuilder.build_template_code(
-    resource=ENTITY_RESOURCE,
-    namespace=CORE_NAMESPACE,
-    level=Levels.ADMIN,
-)
-
-ENTITY_VIEWER_TEMPLATE = PermissionBuilder.build_template_code(
-    resource=ENTITY_RESOURCE,
-    namespace=CORE_NAMESPACE,
-    level=Levels.VIEWER,
-)
-

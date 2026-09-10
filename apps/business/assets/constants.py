@@ -37,8 +37,12 @@ ASSET_TYPE_ENTITY_TYPE_CODE = f"{BUSINESS_NAMESPACE}.{ASSET_TYPE_RESOURCE}"
 # DISPLAY
 # =====================================================
 
-ASSET_LABEL = "Asset"
+ASSET_LABEL = "Assets"
 
-ASSET_DESCRIPTION = "Provides asset management functionality"
+ASSET_DESCRIPTION = "Provides asset management " "and asset lifecycle operations."
 
+ASSET_TYPE_LABEL = "Asset Types"
 
+ASSET_TYPE_DESCRIPTION = (
+    "Provides reusable asset templates " "and module configuration."
+)
