@@ -3,7 +3,7 @@ from botocore.exceptions import ClientError
 
 from apps.blocks.storages.enums import StorageProvider
 from apps.blocks.storages.models import DriveConnection
-from apps.blocks.storages.storage_adapters.base import BaseStorageAdapter
+from apps.blocks.storages.adapters.base import BaseStorageAdapter
 
 
 class S3Adapter(BaseStorageAdapter):
