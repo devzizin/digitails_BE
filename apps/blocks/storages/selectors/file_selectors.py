@@ -2,6 +2,9 @@ from uuid import UUID
 
 from apps.blocks.storages.exceptions import StorageFileNotFound
 from apps.blocks.storages.models import StorageFile
+from apps.core.companies.constants import COMPANY_ENTITY_TYPE_CODE
+from apps.core.entities.models import Entity
+
 
 
 def get_file_by_uuid(file_uuid: UUID) -> StorageFile | None:
@@ -35,3 +38,19 @@ def get_files_for_entity(entity_id):
         entity_id=entity_id,
         deleted_at__isnull=True,
     )
+
+
+def get_list_file_by_entity_type(entity_id: int|None):
+    if not entity_id: 
+        company_entity = Entity.objects.filter(
+            entity_type__code=COMPANY_ENTITY_TYPE_CODE,
+            deleted_at__isnull=True,
+        ).first()
+
+        files = StorageFile.objects.filter(
+            entity_id=company_entity.id,
+            deleted_at__isnull=True,
+        ).all()
+
+    return files
+
